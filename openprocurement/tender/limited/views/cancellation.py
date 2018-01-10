@@ -73,8 +73,9 @@ class TenderReportingCancellationResource(APIResource):
         """Post a cancellation resolution
         """
         apply_patch(self.request, save=False, src=self.request.context.serialize())
+        cancellation = self.request.validated['cancellation']
+        cancellation.date = get_now()
         if self.request.context.status == 'active':
-            cancellation = self.request.validated['cancellation']
             self.cancel(cancellation)
         if save_tender(self.request):
             self.LOGGER.info('Updated tender cancellation {}'.format(self.request.context.id),
