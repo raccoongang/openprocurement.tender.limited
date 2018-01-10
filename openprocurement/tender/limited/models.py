@@ -175,6 +175,7 @@ class Cancellation(BaseCancellation):
         }
 
     reasonType = StringType(choices=['cancelled', 'unsuccessful'], default='cancelled')
+    tenderStatus = StringType(choices=['draft', 'active'])
 
     def validate_relatedLot(self, data, relatedLot):
         if not relatedLot and data.get('cancellationOf') == 'lot':
